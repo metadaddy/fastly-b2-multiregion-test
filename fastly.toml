@@ -1,0 +1,52 @@
+# Fastly / Backblaze B2 Demo
+
+authors = ["pat@backblaze.com"]
+description = "Demo of Fastly Compute@Edge with Backblaze B2"
+language = "rust"
+manifest_version = 2
+name = "fastly-b2-multiregion"
+service_id = ""
+
+# Edit the backends below to match your B2 buckets and endpoints
+
+# Local server config wants URLs
+[local_server]
+  [local_server.backends]
+    [local_server.backends.eu_central]
+      url = "https://YOUR-EU-CENTRAL-BUCKET.YOUR-EU-CENTRAL-ENDPOINT"
+    [local_server.backends.us_east]
+      url = "https://YOUR-US-EAST-BUCKET.YOUR-US-EAST-ENDPOINT"
+    [local_server.backends.us_west]
+      url = "https://YOUR-US-WEST-BUCKET.YOUR-US-WEST-ENDPOINT"
+
+# Deploy on Fastly wants domains and ports
+[setup]
+  [setup.backends]
+    [setup.backends.eu_central]
+      description = "B2 Domain for EU Central origin"
+      address = "YOUR-EU-CENTRAL-BUCKET.YOUR-EU-CENTRAL-ENDPOINT"
+      port = 443
+    [setup.backends.us_east]
+      description = "B2 Domain for US East origin"
+      address = "YOUR-US-EAST-BUCKET.YOUR-US-EAST-ENDPOINT"
+      port = 443
+    [setup.backends.us_west]
+      description = "B2 Domain for US West origin"
+      address = "YOUR-US-WEST-BUCKET.YOUR-US-WEST-ENDPOINT"
+      port = 443
+
+  [setup.dictionaries]
+    [setup.dictionaries.bucket_auth]
+      [setup.dictionaries.bucket_auth.items]
+        [setup.dictionaries.bucket_auth.items.eu_central_access_key_id]
+          description = "B2 Application Key ID for EU Central Origin"
+        [setup.dictionaries.bucket_auth.items.eu_central_secret_access_key]
+          description = "B2 Application Key for EU Central Origin"
+        [setup.dictionaries.bucket_auth.items.us_east_access_key_id]
+          description = "B2 Application Key ID for US East Origin"
+        [setup.dictionaries.bucket_auth.items.us_east_secret_access_key]
+          description = "B2 Application Key for US East Origin"
+        [setup.dictionaries.bucket_auth.items.us_west_access_key_id]
+          description = "B2 Application Key ID for US West Origin"
+        [setup.dictionaries.bucket_auth.items.us_west_secret_access_key]
+          description = "B2 Application Key for US West Origin"
